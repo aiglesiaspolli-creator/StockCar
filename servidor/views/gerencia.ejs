@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+    <!-- Barra de navegação com nome do usuário logado -->
     <header>
         <div class="nav-container">
             <a href="/" class="logo">StoreCar</a>
             <div class="nav-links">
-                <a href="/projetos" class="nav-link">Carros Disponíveis</a>
+                <a href="/pagina" class="nav-link">Carros Disponíveis</a>
                 <a href="/gerencia" class="nav-link active">Gerenciar</a>
                 <span class="nav-link" style="color: var(--accent);">Olá, <%= user.nome %>!</span>
                 <a href="/logout" class="btn-logout">Sair</a>
@@ -20,14 +22,17 @@
     </header>
 
     <main class="page-container">
+
+        <!-- Cabeçalho do painel -->
         <div class="page-header">
             <div class="page-title">
                 <h1>Painel de Gerência</h1>
                 <p>Controle completo do estoque de veículos do sistema (CRUD)</p>
             </div>
-            <a href="/projetos" class="btn-secondary">👁️ Ver Site Público</a>
+            <a href="/pagina" class="btn-secondary">👁️ Ver Site Público</a>
         </div>
 
+        <!-- Mensagens de sucesso ou erro -->
         <% if (locals.success) { %>
             <div class="alert alert-success">
                 <span>✅</span> <%= success %>
@@ -40,7 +45,8 @@
         <% } %>
 
         <div class="management-layout">
-            <!-- Coluna de Cadastro -->
+
+            <!-- Formulário para cadastrar um novo veículo -->
             <div class="management-form">
                 <h3>Cadastrar Novo Veículo</h3>
                 <form action="/gerencia/cadastrar" method="POST">
@@ -48,29 +54,25 @@
                         <label for="marca">Marca</label>
                         <input type="text" id="marca" name="marca" class="form-control" placeholder="Ex: Ford, Chevrolet" required>
                     </div>
-
                     <div class="form-group">
                         <label for="modelo">Modelo</label>
                         <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Ex: Mustang, Onix" required>
                     </div>
-
                     <div class="form-group">
                         <label for="ano">Ano</label>
                         <input type="number" id="ano" name="ano" class="form-control" placeholder="Ex: 2024" min="1900" max="2030" required>
                     </div>
-
                     <div class="form-group">
                         <label for="qtde_disponivel">Quantidade em Estoque</label>
                         <input type="number" id="qtde_disponivel" name="qtde_disponivel" class="form-control" placeholder="Ex: 5" min="0" required>
                     </div>
-
                     <button type="submit" class="btn-primary" style="margin-top: 1rem;">
                         ➕ Adicionar ao Estoque
                     </button>
                 </form>
             </div>
 
-            <!-- Coluna da Tabela de Listagem -->
+            <!-- Tabela com todos os carros cadastrados -->
             <div class="table-responsive">
                 <table class="table-cars">
                     <thead>
@@ -97,8 +99,8 @@
                                         <% } %>
                                     </td>
                                     <td>
+                                        <!-- Botões de ação: Vender, Editar e Excluir -->
                                         <div class="action-buttons">
-                                            <!-- Vender -->
                                             <form action="/vender" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id" value="<%= car._id %>">
                                                 <input type="hidden" name="from" value="/gerencia">
@@ -112,13 +114,9 @@
                                                     </button>
                                                 <% } %>
                                             </form>
-
-                                            <!-- Editar -->
                                             <a href="/gerencia/editar/<%= car._id %>" class="btn-action btn-action-edit" title="Editar informações do carro">
                                                 ✏️ Editar
                                             </a>
-
-                                            <!-- Remover -->
                                             <form action="/gerencia/remover" method="POST" style="display:inline;" onsubmit="return confirm('Deseja realmente remover este carro do sistema?');">
                                                 <input type="hidden" name="id" value="<%= car._id %>">
                                                 <button type="submit" class="btn-action btn-action-delete" title="Excluir carro do sistema">

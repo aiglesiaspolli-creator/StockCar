@@ -8,25 +8,31 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const { MongoClient, ObjectId } = require("mongodb");
 
+// ===== 2. CONFIGURAÇÃO DO SERVIDOR =====
 const app = express();
 const uri = 'mongodb+srv://Arthur:0706@cluster0.kdth2yl.mongodb.net/?appName=Cluster0';
 const client = new MongoClient(uri);
 
-// Middleware
+// Servir arquivos estáticos (CSS, imagens) da pasta "public"
 app.use(express.static("./public"));
+
+// Permite ler dados de formulários HTML
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Configura sessões para manter o login do usuário
 app.use(session({
     secret: 'car-marketplace-secret',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false }
 }));
 
+// Define EJS como motor de templates e a pasta "views" para as páginas
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// Database Collections
+// ===== 3. CONEXÃO COM O BANCO DE DADOS =====
 let usuarios, carros;
 
 async function connectDB() {
@@ -35,14 +41,15 @@ async function connectDB() {
         const dbo = client.db("exemplo_bd");
         usuarios = dbo.collection("usuarios");
         carros = dbo.collection("carros");
-        console.log("Conectado ao MongoDB com sucesso!".green);
+        console.log("Conectado ao MongoDB com sucesso!".blue);
     } catch (e) {
         console.error("Erro ao conectar ao MongoDB:".red, e);
     }
 }
 connectDB();
 
-// Middleware de Autenticação
+// ===== 4. MIDDLEWARE DE AUTENTICAÇÃO =====
+// Verifica se o usuário está logado antes de acessar páginas protegidas
 function checkAuth(req, res, next) {
     if (req.session.user) {
         next();
@@ -51,39 +58,37 @@ function checkAuth(req, res, next) {
     }
 }
 
-// --- ROTAS PRINCIPAIS ---
+// ===== 5. ROTAS PÚBLICAS =====
 
-// Redirecionamento da rota padrão '/' para '/projetos'
+// Redireciona a página inicial para a listagem de carros
 app.get('/', (req, res) => {
-    res.redirect('/projetos');
+    res.redirect('/pagina');
 });
 
-// Página pública de listagem dos carros disponíveis
-app.get('/projetos', async (req, res) => {
+// Página pública que mostra todos os carros disponíveis
+app.get('/pagina', async (req, res) => {
     try {
         if (!carros) {
             return res.status(500).send("Banco de dados inicializando...");
         }
         const allCars = await carros.find({}).toArray();
-        res.render('projetos', {
+        res.render('pagina', {
             user: req.session.user || null,
             cars: allCars,
             success_msg: req.session.success_msg || null,
             error_msg: req.session.error_msg || null
         });
-        
-        // Limpar mensagens da sessão para não repetir no reload
         req.session.success_msg = null;
         req.session.error_msg = null;
     } catch (err) {
-        console.error("Erro ao carregar página de listagem:", err);
+        console.error("Erro ao carregar listagem:", err);
         res.status(500).send("Erro ao carregar listagem dos carros.");
     }
 });
 
-// --- ROTAS DE AUTENTICAÇÃO ---
+// ===== 6. ROTAS DE AUTENTICAÇÃO =====
 
-// Página de Cadastro (GET)
+// Exibe o formulário de cadastro de novo usuário
 app.get('/cadastro', (req, res) => {
     if (req.session.user) {
         return res.redirect('/gerencia');
@@ -91,7 +96,7 @@ app.get('/cadastro', (req, res) => {
     res.render('cadastro');
 });
 
-// Página de Cadastro (POST - Criar Usuário)
+// Processa o cadastro de um novo usuário
 app.post('/cadastro', async (req, res) => {
     const { nome, login, senha } = req.body;
     try {
@@ -102,13 +107,11 @@ app.post('/cadastro', async (req, res) => {
         if (existe) {
             return res.render('cadastro', { error: "Este login já está cadastrado!" });
         }
-        
         const novoUsuario = {
             nome: nome.trim(),
             login: login.trim(),
-            senha: senha // Em produção deve ser hashada
+            senha: senha
         };
-        
         const result = await usuarios.insertOne(novoUsuario);
         req.session.user = {
             id: result.insertedId,
@@ -122,7 +125,7 @@ app.post('/cadastro', async (req, res) => {
     }
 });
 
-// Página de Login (GET)
+// Exibe o formulário de login
 app.get('/login', (req, res) => {
     if (req.session.user) {
         return res.redirect('/gerencia');
@@ -130,7 +133,7 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
-// Página de Login (POST - Autenticação)
+// Processa o login do usuário
 app.post('/login', async (req, res) => {
     const { login, senha } = req.body;
     try {
@@ -154,15 +157,15 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Logout
+// Encerra a sessão do usuário e redireciona para a listagem
 app.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/projetos');
+    res.redirect('/pagina');
 });
 
-// --- ROTAS DE GERÊNCIA DOS CARROS (PROTEGIDAS) ---
+// ===== 7. ROTAS DE GERÊNCIA (PROTEGIDAS POR LOGIN) =====
 
-// Página de Gerência - Read
+// Exibe o painel de gerência com a lista de carros e formulário de cadastro
 app.get('/gerencia', checkAuth, async (req, res) => {
     try {
         if (!carros) {
@@ -175,8 +178,6 @@ app.get('/gerencia', checkAuth, async (req, res) => {
             success: req.session.success || null,
             error: req.session.error || null
         });
-        
-        // Limpar mensagens após exibir
         req.session.success = null;
         req.session.error = null;
     } catch (err) {
@@ -185,7 +186,7 @@ app.get('/gerencia', checkAuth, async (req, res) => {
     }
 });
 
-// Cadastrar novo carro - Create
+// Cadastra um novo carro no banco de dados
 app.post('/gerencia/cadastrar', checkAuth, async (req, res) => {
     const { marca, modelo, ano, qtde_disponivel } = req.body;
     try {
@@ -195,7 +196,6 @@ app.post('/gerencia/cadastrar', checkAuth, async (req, res) => {
             ano: parseInt(ano),
             qtde_disponivel: parseInt(qtde_disponivel)
         };
-        
         await carros.insertOne(novoCarro);
         req.session.success = "Veículo adicionado com sucesso!";
         res.redirect('/gerencia');
@@ -206,7 +206,7 @@ app.post('/gerencia/cadastrar', checkAuth, async (req, res) => {
     }
 });
 
-// Excluir carro - Delete
+// Remove um carro do banco de dados
 app.post('/gerencia/remover', checkAuth, async (req, res) => {
     const { id } = req.body;
     try {
@@ -220,7 +220,7 @@ app.post('/gerencia/remover', checkAuth, async (req, res) => {
     }
 });
 
-// Editar carro (GET - Renderiza formulário de edição) - Read
+// Exibe o formulário para editar um carro existente
 app.get('/gerencia/editar/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     try {
@@ -242,7 +242,7 @@ app.get('/gerencia/editar/:id', checkAuth, async (req, res) => {
     }
 });
 
-// Editar carro (POST - Salvar alterações) - Update
+// Salva as alterações feitas em um carro
 app.post('/gerencia/editar/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     const { marca, modelo, ano, qtde_disponivel } = req.body;
@@ -267,51 +267,49 @@ app.post('/gerencia/editar/:id', checkAuth, async (req, res) => {
     }
 });
 
-// --- ROTA DE VENDA (PROTEGIDA/PÚBLICA DEPENDENDO DA AÇÃO) ---
-
-// Vender carro (Decrementa 1 unidade) - Update
+// ===== 8. ROTA DE VENDA =====
+// Diminui 1 unidade do estoque do carro vendido
 app.post('/vender', async (req, res) => {
     const { id, from } = req.body;
-    const redirectUrl = from === '/gerencia' ? '/gerencia' : '/projetos';
-    
+    const redirectUrl = from === '/gerencia' ? '/gerencia' : '/pagina';
+
     try {
         if (!carros) {
             if (from === '/gerencia') req.session.error = "Banco de dados inicializando...";
             else req.session.error_msg = "Banco de dados inicializando...";
             return res.redirect(redirectUrl);
         }
-        
+
         const car = await carros.findOne({ _id: new ObjectId(id) });
         if (!car) {
             if (from === '/gerencia') req.session.error = "Veículo não encontrado!";
             else req.session.error_msg = "Veículo não encontrado!";
             return res.redirect(redirectUrl);
         }
-        
+
         if (car.qtde_disponivel <= 0) {
             if (from === '/gerencia') req.session.error = "Este veículo já está Esgotado!";
             else req.session.error_msg = "Este veículo já está Esgotado!";
             return res.redirect(redirectUrl);
         }
-        
+
         const novaQuantidade = car.qtde_disponivel - 1;
-        
         await carros.updateOne(
             { _id: new ObjectId(id) },
             { $set: { qtde_disponivel: novaQuantidade } }
         );
-        
-        let successMsg = `Venda registrada com sucesso! ${car.marca} ${car.modelo} agora possui ${novaQuantidade} unidades.`;
+
+        let successMsg = `Venda registrada! ${car.marca} ${car.modelo} agora possui ${novaQuantidade} unidades.`;
         if (novaQuantidade === 0) {
             successMsg += " (Modelo Esgotado!)";
         }
-        
+
         if (from === '/gerencia') {
             req.session.success = successMsg;
         } else {
             req.session.success_msg = successMsg;
         }
-        
+
         res.redirect(redirectUrl);
     } catch (err) {
         console.error("Erro ao processar venda:", err);
@@ -321,7 +319,7 @@ app.post('/vender', async (req, res) => {
     }
 });
 
-// Inicialização do Servidor
+// ===== 9. INICIAR O SERVIDOR =====
 app.listen(80, () => {
-    console.log("Servidor rodando perfeitamente na porta 80".cyan);
+    console.log("Servidor rodando na porta 80");
 });

@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+    <!-- Barra de navegação -->
     <header>
         <div class="nav-container">
-            <a href="/" class="logo"> StoreCar</a>
+            <a href="/" class="logo">StoreCar</a>
             <div class="nav-links">
-                <a href="/projetos" class="nav-link active">Carros Disponíveis</a>
+                <a href="/pagina" class="nav-link active">Carros Disponíveis</a>
                 <% if (locals.user) { %>
                     <span class="nav-link" style="color: var(--accent);">Olá, <%= user.nome %>!</span>
                     <a href="/gerencia" class="nav-link">Gerenciar</a>
@@ -25,6 +27,8 @@
     </header>
 
     <main class="page-container">
+
+        <!-- Cabeçalho da página com título e botão de acesso -->
         <div class="page-header">
             <div class="page-title">
                 <h1>Modelos Disponíveis</h1>
@@ -37,6 +41,7 @@
             <% } %>
         </div>
 
+        <!-- Mensagens de sucesso ou erro -->
         <% if (locals.success_msg) { %>
             <div class="alert alert-success">
                 <span>✅</span> <%= success_msg %>
@@ -48,6 +53,7 @@
             </div>
         <% } %>
 
+        <!-- Lista de carros em formato de cards -->
         <% if (cars && cars.length > 0) { %>
             <div class="cars-grid">
                 <% cars.forEach(function(car) { %>
@@ -67,7 +73,6 @@
                                     <span>📅 Ano: <strong><%= car.ano %></strong></span>
                                 </div>
                             </div>
-                            
                             <div>
                                 <div class="car-stock">
                                     <span>Quantidade: </span>
@@ -78,9 +83,10 @@
                                     <% } %>
                                 </div>
 
+                                <!-- Formulário de venda -->
                                 <form action="/vender" method="POST">
                                     <input type="hidden" name="id" value="<%= car._id %>">
-                                    <input type="hidden" name="from" value="/projetos">
+                                    <input type="hidden" name="from" value="/pagina">
                                     <% if (car.qtde_disponivel <= 0) { %>
                                         <button type="submit" class="btn-sell" disabled>
                                             ⚠️ Esgotado
@@ -96,6 +102,8 @@
                     </div>
                 <% }); %>
             </div>
+
+        <!-- Caso não existam carros cadastrados -->
         <% } else { %>
             <div class="empty-state">
                 <div class="empty-state-icon">🚘</div>

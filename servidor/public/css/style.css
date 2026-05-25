@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-
+/* ===== VARIÁVEIS GLOBAIS DE CORES E ESTILOS ===== */
 :root {
     --bg-primary: #090d16;
     --bg-secondary: #111827;
@@ -15,12 +14,11 @@
     --success-light: rgba(16, 185, 129, 0.15);
     --danger: #ef4444;
     --danger-light: rgba(239, 68, 68, 0.15);
-    --warning: #f59e0b;
-    --warning-light: rgba(245, 158, 11, 0.15);
     --border-radius: 16px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ===== RESET GERAL ===== */
 * {
     margin: 0;
     padding: 0;
@@ -28,9 +26,10 @@
     font-family: 'Outfit', sans-serif;
 }
 
+/* ===== CORPO DA PÁGINA ===== */
 body {
     background-color: var(--bg-primary);
-    background-image: 
+    background-image:
         radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
     background-attachment: fixed;
@@ -42,7 +41,7 @@ body {
     line-height: 1.5;
 }
 
-/* Header / Navbar */
+/* ===== BARRA DE NAVEGAÇÃO ===== */
 header {
     background: rgba(9, 13, 22, 0.8);
     backdrop-filter: blur(12px);
@@ -109,7 +108,9 @@ header {
     color: white;
 }
 
-/* Main layouts */
+/* ===== LAYOUTS PRINCIPAIS ===== */
+
+/* Container centralizado (usado em login e cadastro) */
 .app-container {
     flex: 1;
     display: flex;
@@ -119,6 +120,7 @@ header {
     width: 100%;
 }
 
+/* Container de página ampla (usado em gerência e listagem) */
 .page-container {
     width: 100%;
     max-width: 1200px;
@@ -127,7 +129,7 @@ header {
     flex: 1;
 }
 
-/* Glass Card para formulários centrais (Login/Cadastro) */
+/* ===== CARD DE VIDRO (FORMULÁRIOS CENTRAIS) ===== */
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -161,7 +163,7 @@ header {
     font-size: 0.95rem;
 }
 
-/* Forms */
+/* ===== FORMULÁRIOS ===== */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -192,7 +194,7 @@ header {
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-/* Buttons */
+/* ===== BOTÕES ===== */
 .btn-primary {
     width: 100%;
     background: var(--accent-gradient);
@@ -241,7 +243,7 @@ header {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Alert Boxes */
+/* ===== ALERTAS (SUCESSO E ERRO) ===== */
 .alert {
     padding: 0.75rem 1rem;
     border-radius: 10px;
@@ -264,7 +266,7 @@ header {
     border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-/* Helper Text */
+/* ===== RODAPÉ DE FORMULÁRIO ===== */
 .form-footer {
     margin-top: 1.5rem;
     text-align: center;
@@ -282,7 +284,7 @@ header {
     text-decoration: underline;
 }
 
-/* Grid Layouts for Car Cards */
+/* ===== GRID DE CARDS DE CARROS ===== */
 .cars-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -318,6 +320,7 @@ header {
     position: relative;
 }
 
+/* ===== BADGES DE ESTOQUE ===== */
 .car-badge {
     position: absolute;
     top: 1rem;
@@ -340,6 +343,7 @@ header {
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
+/* ===== DETALHES DO CARRO ===== */
 .car-details {
     padding: 1.5rem;
     flex: 1;
@@ -376,6 +380,7 @@ header {
     color: var(--accent);
 }
 
+/* ===== BOTÃO DE VENDA ===== */
 .btn-sell {
     background: rgba(16, 185, 129, 0.1);
     color: var(--success);
@@ -405,7 +410,7 @@ header {
     cursor: not-allowed;
 }
 
-/* Management Layout (Tabelas e Formulários lado a lado) */
+/* ===== LAYOUT DE GERÊNCIA (FORMULÁRIO + TABELA) ===== */
 .management-layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -437,6 +442,7 @@ header {
     padding-bottom: 0.75rem;
 }
 
+/* ===== TABELA DE CARROS ===== */
 .table-responsive {
     overflow-x: auto;
     background: var(--glass-bg);
@@ -471,6 +477,7 @@ header {
     border-bottom: none;
 }
 
+/* ===== BOTÕES DE AÇÃO DA TABELA ===== */
 .action-buttons {
     display: flex;
     gap: 0.5rem;
@@ -512,7 +519,7 @@ header {
     color: white;
 }
 
-/* Page Headers */
+/* ===== CABEÇALHO DA PÁGINA ===== */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -535,7 +542,7 @@ header {
     margin-top: 0.25rem;
 }
 
-/* Empty State */
+/* ===== ESTADO VAZIO (SEM CARROS) ===== */
 .empty-state {
     text-align: center;
     padding: 4rem 2rem;
@@ -553,7 +560,7 @@ header {
     margin-bottom: 0.5rem;
 }
 
-/* Animations */
+/* ===== ANIMAÇÕES ===== */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -565,6 +572,7 @@ header {
     }
 }
 
+/* ===== RODAPÉ ===== */
 footer {
     text-align: center;
     padding: 2rem;

@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+    <!-- Barra de navegação -->
     <header>
         <div class="nav-container">
-            <a href="/" class="logo"> StoreCar</a>
+            <a href="/" class="logo">StoreCar</a>
             <div class="nav-links">
-                <a href="/projetos" class="nav-link">Carros Disponíveis</a>
+                <a href="/pagina" class="nav-link">Carros Disponíveis</a>
                 <a href="/login" class="nav-link active">Login</a>
                 <a href="/cadastro" class="nav-link">Cadastrar</a>
             </div>
@@ -23,23 +25,23 @@
             <h2>Bem-vindo de volta</h2>
             <p class="subtitle">Faça login para gerenciar a frota de carros</p>
 
+            <!-- Mensagem de erro, se houver -->
             <% if (locals.error) { %>
                 <div class="alert alert-danger">
                     <span>⚠️</span> <%= error %>
                 </div>
             <% } %>
 
+            <!-- Formulário de login -->
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="login">Nome de Usuário (Login)</label>
                     <input type="text" id="login" name="login" class="form-control" placeholder="Seu usuário" required autocomplete="username">
                 </div>
-
                 <div class="form-group">
                     <label for="senha">Senha de Acesso</label>
                     <input type="password" id="senha" name="senha" class="form-control" placeholder="Sua senha" required autocomplete="current-password">
                 </div>
-
                 <button type="submit" class="btn-primary">Entrar no Sistema</button>
             </form>
 

@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+    <!-- Barra de navegação -->
     <header>
         <div class="nav-container">
             <a href="/" class="logo">StoreCar</a>
             <div class="nav-links">
-                <a href="/projetos" class="nav-link">Carros Disponíveis</a>
+                <a href="/pagina" class="nav-link">Carros Disponíveis</a>
                 <a href="/login" class="nav-link">Login</a>
                 <a href="/cadastro" class="nav-link active">Cadastrar</a>
             </div>
@@ -23,34 +25,27 @@
             <h2>Criar Conta</h2>
             <p class="subtitle">Cadastre-se para gerenciar o estoque de carros</p>
 
+            <!-- Mensagem de erro, se houver -->
             <% if (locals.error) { %>
                 <div class="alert alert-danger">
                     <span>⚠️</span> <%= error %>
                 </div>
             <% } %>
 
-            <% if (locals.success) { %>
-                <div class="alert alert-success">
-                    <span>✅</span> <%= success %>
-                </div>
-            <% } %>
-
+            <!-- Formulário de cadastro -->
             <form action="/cadastro" method="POST">
                 <div class="form-group">
                     <label for="nome">Nome Completo</label>
                     <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu nome" required autocomplete="name">
                 </div>
-
                 <div class="form-group">
                     <label for="login">Nome de Usuário (Login)</label>
                     <input type="text" id="login" name="login" class="form-control" placeholder="Ex: arthur07" required autocomplete="username">
                 </div>
-
                 <div class="form-group">
                     <label for="senha">Senha de Acesso</label>
                     <input type="password" id="senha" name="senha" class="form-control" placeholder="Sua senha secreta" required autocomplete="new-password">
                 </div>
-
                 <button type="submit" class="btn-primary">Criar Minha Conta</button>
             </form>
 
@@ -61,7 +56,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+        <p>&copy; 2026 StoreCar. Desenvolvido por Arthur Polli para gerenciamento de estoque de veículos.</p>
     </footer>
 </body>
 </html>
