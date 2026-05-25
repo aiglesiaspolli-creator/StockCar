@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- Barra de navegação com nome do usuário logado -->
     <header>
         <div class="nav-container">
             <a href="/" class="logo">StoreCar</a>
@@ -23,7 +22,6 @@
 
     <main class="page-container">
 
-        <!-- Cabeçalho do painel -->
         <div class="page-header">
             <div class="page-title">
                 <h1>Painel de Gerência</h1>
@@ -32,7 +30,6 @@
             <a href="/pagina" class="btn-secondary">👁️ Ver Site Público</a>
         </div>
 
-        <!-- Mensagens de sucesso ou erro -->
         <% if (locals.success) { %>
             <div class="alert alert-success">
                 <span>✅</span> <%= success %>
@@ -46,7 +43,6 @@
 
         <div class="management-layout">
 
-            <!-- Formulário para cadastrar um novo veículo -->
             <div class="management-form">
                 <h3>Cadastrar Novo Veículo</h3>
                 <form action="/gerencia/cadastrar" method="POST">
@@ -66,13 +62,16 @@
                         <label for="qtde_disponivel">Quantidade em Estoque</label>
                         <input type="number" id="qtde_disponivel" name="qtde_disponivel" class="form-control" placeholder="Ex: 5" min="0" required>
                     </div>
+                    <div class="form-group">
+                        <label for="valor">Valor (R$)</label>
+                        <input type="number" id="valor" name="valor" class="form-control" placeholder="Ex: 85000.00" step="0.01" min="0" required>
+                    </div>
                     <button type="submit" class="btn-primary" style="margin-top: 1rem;">
                         ➕ Adicionar ao Estoque
                     </button>
                 </form>
             </div>
 
-            <!-- Tabela com todos os carros cadastrados -->
             <div class="table-responsive">
                 <table class="table-cars">
                     <thead>
@@ -81,7 +80,7 @@
                             <th>Modelo</th>
                             <th>Ano</th>
                             <th>Quantidade</th>
-                            <th>Ações</th>
+                            <th>Valor</th> <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,8 +97,8 @@
                                             <span class="stock-count"><%= car.qtde_disponivel %></span> unid.
                                         <% } %>
                                     </td>
+                                    <td>R$ <%= car.valor ? car.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2}) : '0,00' %></td>
                                     <td>
-                                        <!-- Botões de ação: Vender, Editar e Excluir -->
                                         <div class="action-buttons">
                                             <form action="/vender" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id" value="<%= car._id %>">
@@ -129,7 +128,7 @@
                             <% }); %>
                         <% } else { %>
                             <tr>
-                                <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                                <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
                                     Nenhum veículo registrado no momento. Preencha o formulário para adicionar!
                                 </td>
                             </tr>
@@ -141,7 +140,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+        <p>&copy; 2026 StockCar. Desenvolvido por Arthur Polli para gerenciamento de estoque de veículos.</p>
     </footer>
 </body>
 </html>

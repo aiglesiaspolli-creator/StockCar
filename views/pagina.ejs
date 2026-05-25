@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeria de Carros - StockCar</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
     <!-- Barra de navegação -->
@@ -59,7 +61,6 @@
                 <% cars.forEach(function(car) { %>
                     <div class="car-card">
                         <div class="car-image">
-                            🚗
                             <% if (car.qtde_disponivel <= 0) { %>
                                 <span class="car-badge badge-outstock">Esgotado</span>
                             <% } else { %>
@@ -68,9 +69,15 @@
                         </div>
                         <div class="car-details">
                             <div>
-                                <h3 class="car-title"><%= car.marca %> - <%= car.modelo %></h3>
+                                <h3 class="car-title">
+                                    <%= car.marca %> - <%= car.modelo %>
+                                </h3>
                                 <div class="car-meta">
                                     <span>📅 Ano: <strong><%= car.ano %></strong></span>
+                                </div>
+                                <!-- Exibição do valor formatado no card -->
+                                <div class="car-price" style="margin-top: 0.6rem; font-size: 1.25rem; color: #34d399; font-weight: bold;">
+                                    R$ <%= car.valor ? car.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2}) : '0,00' %>
                                 </div>
                             </div>
                             <div>
@@ -83,7 +90,7 @@
                                     <% } %>
                                 </div>
 
-                                <!-- Formulário de venda -->
+                                <!-- Formulário de compra -->
                                 <form action="/vender" method="POST">
                                     <input type="hidden" name="id" value="<%= car._id %>">
                                     <input type="hidden" name="from" value="/pagina">
@@ -92,8 +99,9 @@
                                             ⚠️ Esgotado
                                         </button>
                                     <% } else { %>
+                                        <!-- TEXTO ALTERADO PARA "COMPRAR" -->
                                         <button type="submit" class="btn-sell">
-                                            💸 Vender 1 Unidade
+                                            🛍️ Comprar
                                         </button>
                                     <% } %>
                                 </form>
@@ -106,7 +114,7 @@
         <!-- Caso não existam carros cadastrados -->
         <% } else { %>
             <div class="empty-state">
-                <div class="empty-state-icon">🚘</div>
+                <div class="empty-state-icon"></div>
                 <h3>Nenhum carro cadastrado no momento</h3>
                 <p>Entre no painel de gerência para cadastrar novos veículos na frota.</p>
                 <% if (locals.user) { %>
@@ -119,7 +127,8 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+        <p>&copy; 2026 StockCar. Desenvolvido por Arthur Polli para gerenciamento de estoque de veículos.</p>
     </footer>
 </body>
+
 </html>

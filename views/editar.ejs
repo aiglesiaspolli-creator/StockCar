@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- Barra de navegação -->
     <header>
         <div class="nav-container">
             <a href="/" class="logo">StoreCar</a>
@@ -26,14 +25,12 @@
             <h2>Editar Veículo</h2>
             <p class="subtitle">Modifique as informações do veículo no banco de dados</p>
 
-            <!-- Mensagem de erro, se houver -->
             <% if (locals.error) { %>
                 <div class="alert alert-danger">
                     <span>⚠️</span> <%= error %>
                 </div>
             <% } %>
 
-            <!-- Formulário de edição preenchido com os dados atuais -->
             <form action="/gerencia/editar/<%= car._id %>" method="POST">
                 <div class="form-group">
                     <label for="marca">Marca</label>
@@ -51,6 +48,10 @@
                     <label for="qtde_disponivel">Quantidade em Estoque</label>
                     <input type="number" id="qtde_disponivel" name="qtde_disponivel" class="form-control" value="<%= car.qtde_disponivel %>" min="0" required>
                 </div>
+                <div class="form-group">
+                    <label for="valor">Valor (R$)</label>
+                    <input type="number" id="valor" name="valor" class="form-control" value="<%= car.valor %>" step="0.01" min="0" required>
+                </div>
                 <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
                     <a href="/gerencia" class="btn-secondary" style="flex: 1;">Cancelar</a>
                     <button type="submit" class="btn-primary" style="flex: 2;">Salvar Alterações</button>
@@ -60,7 +61,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+        <p>&copy; 2026 StockCar. Desenvolvido por Arthur Polli para gerenciamento de estoque de veículos.</p>
     </footer>
 </body>
 </html>
