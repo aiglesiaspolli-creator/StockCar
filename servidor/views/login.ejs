@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - StockCar</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="/" class="logo"> StoreCar</a>
+            <div class="nav-links">
+                <a href="/projetos" class="nav-link">Carros Disponíveis</a>
+                <a href="/login" class="nav-link active">Login</a>
+                <a href="/cadastro" class="nav-link">Cadastrar</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <div class="glass-card">
+            <h2>Bem-vindo de volta</h2>
+            <p class="subtitle">Faça login para gerenciar a frota de carros</p>
+
+            <% if (locals.error) { %>
+                <div class="alert alert-danger">
+                    <span>⚠️</span> <%= error %>
+                </div>
+            <% } %>
+
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="login">Nome de Usuário (Login)</label>
+                    <input type="text" id="login" name="login" class="form-control" placeholder="Seu usuário" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha de Acesso</label>
+                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Sua senha" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn-primary">Entrar no Sistema</button>
+            </form>
+
+            <div class="form-footer">
+                Ainda não tem conta? <a href="/cadastro">Cadastre-se agora</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+    </footer>
+</body>
+</html>

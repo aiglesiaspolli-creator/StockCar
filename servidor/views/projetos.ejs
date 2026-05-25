@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Carros - StockCar</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="/" class="logo"> StoreCar</a>
+            <div class="nav-links">
+                <a href="/projetos" class="nav-link active">Carros Disponíveis</a>
+                <% if (locals.user) { %>
+                    <span class="nav-link" style="color: var(--accent);">Olá, <%= user.nome %>!</span>
+                    <a href="/gerencia" class="nav-link">Gerenciar</a>
+                    <a href="/logout" class="btn-logout">Sair</a>
+                <% } else { %>
+                    <a href="/login" class="nav-link">Login</a>
+                    <a href="/cadastro" class="nav-link">Cadastrar</a>
+                <% } %>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Modelos Disponíveis</h1>
+                <p>Confira nossa frota de veículos modernos e escolha o seu</p>
+            </div>
+            <% if (!locals.user) { %>
+                <a href="/login" class="btn-primary" style="width: auto;">Acessar Painel de Gerência</a>
+            <% } else { %>
+                <a href="/gerencia" class="btn-primary" style="width: auto;">Painel de Controle</a>
+            <% } %>
+        </div>
+
+        <% if (locals.success_msg) { %>
+            <div class="alert alert-success">
+                <span>✅</span> <%= success_msg %>
+            </div>
+        <% } %>
+        <% if (locals.error_msg) { %>
+            <div class="alert alert-danger">
+                <span>⚠️</span> <%= error_msg %>
+            </div>
+        <% } %>
+
+        <% if (cars && cars.length > 0) { %>
+            <div class="cars-grid">
+                <% cars.forEach(function(car) { %>
+                    <div class="car-card">
+                        <div class="car-image">
+                            🚗
+                            <% if (car.qtde_disponivel <= 0) { %>
+                                <span class="car-badge badge-outstock">Esgotado</span>
+                            <% } else { %>
+                                <span class="car-badge badge-instock">Em Estoque</span>
+                            <% } %>
+                        </div>
+                        <div class="car-details">
+                            <div>
+                                <h3 class="car-title"><%= car.marca %> - <%= car.modelo %></h3>
+                                <div class="car-meta">
+                                    <span>📅 Ano: <strong><%= car.ano %></strong></span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="car-stock">
+                                    <span>Quantidade: </span>
+                                    <% if (car.qtde_disponivel <= 0) { %>
+                                        <span class="stock-count" style="color: var(--danger);">0 (Sem estoque)</span>
+                                    <% } else { %>
+                                        <span class="stock-count"><%= car.qtde_disponivel %> unidades</span>
+                                    <% } %>
+                                </div>
+
+                                <form action="/vender" method="POST">
+                                    <input type="hidden" name="id" value="<%= car._id %>">
+                                    <input type="hidden" name="from" value="/projetos">
+                                    <% if (car.qtde_disponivel <= 0) { %>
+                                        <button type="submit" class="btn-sell" disabled>
+                                            ⚠️ Esgotado
+                                        </button>
+                                    <% } else { %>
+                                        <button type="submit" class="btn-sell">
+                                            💸 Vender 1 Unidade
+                                        </button>
+                                    <% } %>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="empty-state">
+                <div class="empty-state-icon">🚘</div>
+                <h3>Nenhum carro cadastrado no momento</h3>
+                <p>Entre no painel de gerência para cadastrar novos veículos na frota.</p>
+                <% if (locals.user) { %>
+                    <a href="/gerencia" class="btn-primary" style="width: auto; margin-top: 1.5rem; display: inline-flex;">Ir para Gerência</a>
+                <% } else { %>
+                    <a href="/login" class="btn-primary" style="width: auto; margin-top: 1.5rem; display: inline-flex;">Fazer Login</a>
+                <% } %>
+            </div>
+        <% } %>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+    </footer>
+</body>
+</html>

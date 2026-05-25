@@ -1,0 +1,26 @@
+{
+  "name": "servidor",
+  "version": "0.1.0",
+  "description": "meu primeiro projeto de full stack",
+  "main": "servidor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fagnerpimentel/FullStack_2025.2.git"
+  },
+  "author": "Fagner Pimentel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fagnerpimentel/FullStack_2025.2/issues"
+  },
+  "homepage": "https://github.com/fagnerpimentel/FullStack_2025.2#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongodb": "4.12"
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Veículo - StockCar</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="/" class="logo">StoreCar</a>
+            <div class="nav-links">
+                <a href="/projetos" class="nav-link">Carros Disponíveis</a>
+                <a href="/gerencia" class="nav-link active">Gerenciar</a>
+                <span class="nav-link" style="color: var(--accent);">Olá, <%= user.nome %>!</span>
+                <a href="/logout" class="btn-logout">Sair</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <div class="glass-card">
+            <h2>Editar Veículo</h2>
+            <p class="subtitle">Modifique as informações do veículo no banco de dados</p>
+
+            <% if (locals.error) { %>
+                <div class="alert alert-danger">
+                    <span>⚠️</span> <%= error %>
+                </div>
+            <% } %>
+
+            <form action="/gerencia/editar/<%= car._id %>" method="POST">
+                <div class="form-group">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" name="marca" class="form-control" value="<%= car.marca %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modelo">Modelo</label>
+                    <input type="text" id="modelo" name="modelo" class="form-control" value="<%= car.modelo %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ano">Ano</label>
+                    <input type="number" id="ano" name="ano" class="form-control" value="<%= car.ano %>" min="1900" max="2030" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="qtde_disponivel">Quantidade em Estoque</label>
+                    <input type="number" id="qtde_disponivel" name="qtde_disponivel" class="form-control" value="<%= car.qtde_disponivel %>" min="0" required>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <a href="/gerencia" class="btn-secondary" style="flex: 1;">Cancelar</a>
+                    <button type="submit" class="btn-primary" style="flex: 2;">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 StockCar. Desenvolvido para gerenciamento de estoque de veículos.</p>
+    </footer>
+</body>
+</html>
