@@ -22,5 +22,5 @@ npm install mongodb@4.12
 ------------------------------------------
 
 colocar na pasta
-
-localhost
+node servidor.js
+localhost 
