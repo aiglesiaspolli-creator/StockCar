@@ -1,0 +1,92 @@
+Arquitetura de Software Web e a Internet
+•	Divisão da Aplicação Web: Uma aplicação moderna é dividida em duas camadas principais: 
+o	Front-End: A camada de interface que interage diretamente com o usuário (o que é visualizado no navegador). Tecnologias utilizadas: HTML5, CSS3 e JavaScript. 
+o	Back-End: A camada lógica e de processamento de dados que roda no servidor (o que define como o sistema funciona por trás). Tecnologias utilizadas no curso: Node.js e MongoDB. 
+•	História e Evolução (ArpaNet): Precursora da Internet criada em 1969 pela ARPA com objetivos militares e de pesquisa científica durante a Guerra Fria. Em 1984, dividiu-se em MILNET (militar) e ARPANET (acadêmica/não-militar). 
+•	Páginas Dinâmicas: Para criar páginas dinâmicas no servidor, este deve processar requisições com base nas necessidades transmitidas diretamente pelos usuários. 
+2. Estilização Avançada com CSS3 e Layout Flexível
+•	O que é CSS: Cascading Style Sheets (Folha de Estilo em Cascata), focado na estética, cores, fontes, espaçamento e disposição visual. 
+•	Modelo de Caixa (Box Model) e Bordas:
+o	Composto por margin (margem externa), border (borda), padding (espaçamento interno), width (largura) e height (altura). 
+o	Propriedades visuais importantes: border-style (solid, dotted, dashed, double, etc.) , border-radius (arredondar cantos) e box-shadow (aplicação de sombras). 
+•	CSS3 Flexbox:
+o	Conceito criado para organizar elementos dinamicamente dentro de containers, essencial para sites responsivos (que se adaptam a diferentes telas). Evita o uso complexo de flutuações (float) ou posicionamentos explícitos fixos. 
+o	Flex Container: O elemento pai que envolve os itens. Ativa-se declarando a propriedade display: flex; no container. Os filhos tornam-se automaticamente itens flexíveis (flex items). 
+3. Lógica de Programação e Fundamentos de JavaScript
+•	Níveis de Linguagem:
+o	Baixo Nível: Pouca ou nenhuma abstração da arquitetura (Ex: Assembly). São rápidas e não precisam de compilação direta pelo programador, pois já estão próximas do formato que o processador entende. 
+o	Alto Nível: Alta abstração. O desenvolvedor não precisa conhecer detalhes físicos do hardware (Ex: Python, JavaScript). Necessitam de um compilador ou interpretador para traduzir o código para baixo nível. 
+•	Escopo de Variáveis no JavaScript:
+o	Sem palavra-chave: Torna-se uma variável global automaticamente (prática não recomendada por poluir o escopo). 
+o	var: Possui escopo de função. 
+o	let: Possui escopo de bloco (restrita ao bloco {} onde foi criada, como loops ou condicionais). Tentar acessá-la fora gera um erro de referência. 
+o	const: Possui escopo de bloco (assim como o let), mas é de apenas leitura (read-only), ou seja, seu valor não pode ser reatribuído após a criação. 
+•	Interação com o HTML (DOM): O JavaScript consegue alterar dinamicamente elementos da estrutura HTML. O método mais comum utilizado é o document.getElementById("id_do_elemento").innerHTML = "novo_texto";, que captura o elemento pelo seu identificador único e substitui o conteúdo textual interno. 
+4. Comunicação Cliente-Servidor e Formulários (HTTP)
+•	Tag <form>: Cria a estrutura de formulários necessária para coletar dados do usuário e enviá-los ao servidor. 
+•	Atributos Cruciais do Form:
+o	action: Especifica o endereço de destino (URL) para onde os dados coletados devem ser encaminhados ao submeter o formulário. 
+o	method: Define o método de envio HTTP. Os dois principais são: 
+	GET: Passa os parâmetros e dados diretamente visíveis na própria URL do navegador (Ex: URL&nome=fulano). 
+	POST: Encaminha os dados de forma oculta da URL, encapsulados dentro do corpo (body) da requisição HTTP, garantindo maior discrição para informações sensíveis. 
+5. Bancos de Dados e Operações CRUD (MongoDB e Relacional)
+•	Definição: Coleções organizadas de dados que se relacionam para dar sentido e fornecer eficiência na recuperação rápida de informações cruciais. 
+•	Modelos de Banco de Dados:
+o	Relacional: Organiza os dados estritamente em tabelas (relações). As linhas correspondem aos registros ou tuplas, e as colunas representam os campos ou atributos. Utiliza a linguagem padronizada SQL (Structured Query Language). 
+o	Não Relacional (NoSQL - MongoDB): Armazena dados de forma flexível utilizando coleções e documentos (geralmente em formatos semelhantes ao JSON). 
+•	MongoDB Compass: Interface gráfica (GUI) oficial usada para visualizar, adicionar e excluir documentos, coleções ou bancos de dados completos de maneira visual. 
+•	Conceito do CRUD: Sigla para as quatro operações básicas de manipulação de dados em qualquer sistema de persistência: 
+o	Create (Criação / Inserção de registros). 
+o	Read (Leitura / Consulta de dados). 
+o	Update (Atualização / Alteração de registros existentes). 
+o	Delete (Destruição / Remoção de dados). 
+💡 Dicas Importantes para uma Prova Escrita da FEI:
+1.	Diferencie claramente os escopos: Questões comparando var, let e const são clássicas em exames de JS. Lembre-se: let e const são blocos, var é função. 
+2.	Entenda o fluxo dos formulários: Saiba explicar o que acontece quando você clica em enviar, sabendo a diferença prática do destino visual dos dados em métodos get e post. 
+3.	Terminologia de Banco de Dados: Saiba mapear os conceitos. No modelo relacional temos tabelas, linhas (tuplas) e colunas (atributos) ; já no NoSQL (MongoDB) operamos com bancos, coleções e documentos.
+Com base nos conceitos de organização de código e boas práticas no desenvolvimento de sistemas web abordados ao longo do curso na FEI, separei os pontos fundamentais que costumam ser cobrados em provas escritas:
+1. Separação de Responsabilidades (Estrutura de Arquivos)
+Uma das maiores boas práticas do Desenvolvimento Web é nunca misturar tudo no mesmo arquivo. Cada tecnologia deve cuidar exclusivamente do seu papel:
+•	HTML apenas para Estrutura: Deve conter puramente as tags, os textos e a semântica da página. Evita-se ao máximo usar estilos na própria tag (ex: <p style="color: red;">).
+•	CSS Externo para Estilização: Toda a parte visual (cores, fontes, bordas, propriedades do Flexbox) deve ficar num arquivo separado (ex: estilo.css), que é linkado no HTML através da tag <link href="estilo.css" rel="stylesheet">. Isso permite reutilizar o mesmo design em várias páginas e deixa o código limpo.
+•	JavaScript Externo para Comportamento: Toda a lógica de programação, funções e manipulação do DOM devem ficar num arquivo .js separado.
+2. Boas Práticas no Uso de Escopos em JavaScript (var, let e const)
+Conforme destacado nos slides de JavaScript:
+•	Evitar variáveis sem palavra-chave: Criar uma variável omitindo o let, var ou const (ex: a = 1;) faz com que ela se torne uma variável global. Isso é altamente não recomendado, pois polui a memória global do navegador e pode gerar conflitos graves com outras funções do sistema.
+•	Preferir const e let sobre var: A boa prática moderna dita que devemos usar const por padrão para tudo o que não for sofrer reatribuição (variáveis de leitura), e let apenas quando o valor precisar mudar explicitamente dentro de um bloco de código. O uso do var caiu em desuso por não respeitar escopos de bloco (como estruturas if ou for), gerando comportamentos imprevisíveis.
+3. Organização de Identificadores (Quando usar ID ou Class)
+Para manter o CSS e o JavaScript limpos e performáticos, existe uma clara divisão de tarefas:
+•	Use class para Estilo (CSS): A melhor prática é estruturar o design visual focado em classes. Como uma classe pode ser aplicada a vários elementos, você escreve menos código CSS e consegue manter uma identidade visual padronizada no site inteiro.
+•	Use id para Comportamento (JavaScript): O id deve ser guardado quase que exclusivamente para mapear elementos únicos que precisam interagir com regras de programação, servindo como a "âncora" perfeita para o método document.getElementById(). Evita-se usar id para estilização em CSS porque ele possui uma "especificidade" muito alta, o que dificulta a manutenção ou sobrescrita de estilos futuramente.
+4. Semântica no HTML e Containers
+•	Embora a tag <div> seja excelente para criar containers estruturais (essencial para agrupar elementos no Flexbox, por exemplo), a boa prática diz que ela não deve ser usada para absolutamente tudo na página (divitis).
+•	Para textos comuns deve-se usar <p>, para títulos <h1> a <h6>, e guardar as <div> prioritariamente como caixas organizadoras de layout ou containers para estilização.
+💡 Resumo para fixação na Prova Escrita:
+•	HTML: Estrutura
+•	CSS: Arquivo externo + Seletores de classe (.classe) para o visual.
+•	JavaScript: Arquivo externo + let/const (nunca global) + getElementById("#id") para interações dinâmicas.
+Com base nas estruturas fundamentais do HTML e CSS abordadas nos slides (especialmente nos conceitos de estilização e manipulação do DOM), preparei resumos detalhados sobre as tags, <div>, class, id e suas diferenças cruciais para a prova escrita.
+1. O que são Tags e a Tag <div>
+•	Tags HTML: São a estrutura básica da Web. Elas funcionam como "etiquetas" que dizem ao navegador o que cada elemento é (um parágrafo <p>, um título <h1>, uma imagem <img>, etc.). A maioria das tags possui uma abertura e um fechamento (ex: <p>Conteúdo</p>).
+•	A Tag <div>: É uma tag de divisão (division). Ela não tem nenhum significado semântico (não indica se é um texto ou um título), funcionando puramente como um container genérico. Os slides mostram que ela é muito utilizada para agrupar elementos comuns para que possam ser estilizados juntos no CSS (como no Flexbox com a .flex-container) ou manipulados via JavaScript.
+
+
+2. O que é um ID (id)
+•	Definição: O atributo id atribui um identificador exclusivo e único a um elemento HTML na página inteira.
+•	Regra de Ouro: Dois elementos diferentes não podem partilhar o mesmo id no mesmo arquivo HTML. É como se fosse o CPF do elemento.
+•	Uso no CSS: No arquivo de estilos, você referencia um id utilizando o símbolo de cerquilha (#).
+3. O que é uma Classe (class)
+•	Definição: O atributo class serve para agrupar e categorizar vários elementos que devem compartilhar das mesmas características visuais ou comportamentos.
+•	Regra de Ouro: Diferentes elementos podem ter a mesma classe, e um único elemento pode ter múltiplas classes (separadas por espaço).
+•	Uso no CSS: Nos slides da FEI, as classes são amplamente usadas na estilização ligada a arquivos externos usando o símbolo de ponto (.).
+•	
+4. Resumo Prático: A Diferença entre ID e Classe
+Para fins de prova escrita, lembre-se desta analogia e regras de diferenciação:
+•	Identidade vs. Grupo: O id é o nome próprio do elemento (individual); a class é o uniforme de um time (coletivo).
+•	No HTML:
+o	Um id só pode aparecer uma vez por página.
+o	Uma class pode se repetir infinitas vezes.
+•	No CSS:
+o	Para chamar um ID, usa-se # (Ex: #topo).
+o	Para chamar uma Classe, usa-se . (Ex: .itens).
+•	No JavaScript (DOM): O id é o caminho padrão usado no curso com getElementById para alterar o conteúdo de um ponto fixo e específico da sua aplicação web.
