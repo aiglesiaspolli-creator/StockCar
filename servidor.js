@@ -10,7 +10,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 
 // ===== 2. CONFIGURAÇÃO DO SERVIDOR =====
 const app = express();
-const uri = 'mongodb+srv://Arthur:0706@cluster0.kdth2yl.mongodb.net/?appName=Cluster0';
+const uri = '';
 const client = new MongoClient(uri);
 
 app.use(express.static("./public"));
